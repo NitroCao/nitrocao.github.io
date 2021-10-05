@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>为 sudo 命令启用 Touch ID 和 Apple Watch</title>
+    <link href="/2021/10/04/enable-touchid-for-sudo/"/>
+    <url>/2021/10/04/enable-touchid-for-sudo/</url>
+    
+    <content type="html"><![CDATA[<p>在 Mac 上使用 sudo 命令时，可使用 TouchID 和/或 Apple Watch 代替输入密码。</p><h2 id="支持-Touch-ID-的-Mac"><a href="#支持-Touch-ID-的-Mac" class="headerlink" title="支持 Touch ID 的 Mac"></a>支持 Touch ID 的 Mac</h2><p>支持 TouchID 的 Mac 上原生支持使用 TouchID 和 Apple Watch 解锁，执行 sudo 命令时 Touch ID 和 Apple Watch 都会弹出确认对话框，只需要使用一种方式确认即可。</p><p>开启方法：在 PAM 的配置文件 <code>/etc/pam.d/sudo</code> 开头加入以下内容即可：</p><figure class="highlight nginx"><table><tr><td class="gutter hljs hljs hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs nginx"><span class="hljs-attribute">auth</span>       sufficient     pam_tid.so<br></code></pre></div></td></tr></table></figure><h2 id="不支持-Touch-ID-的-Mac"><a href="#不支持-Touch-ID-的-Mac" class="headerlink" title="不支持 Touch ID 的 Mac"></a>不支持 Touch ID 的 Mac</h2><p>不支持 Touch ID 的 Mac 需要安装额外的 PAM 插件 <a href="https://github.com/biscuitehh/pam-watchid">pam-watchid</a> 以使用 Apple Watch。按照 README 中的步骤安装即可。</p><h2 id="在-tmux-中的问题"><a href="#在-tmux-中的问题" class="headerlink" title="在 tmux 中的问题"></a>在 tmux 中的问题</h2><p>如果使用 tmux，就会发现不能使用 Touch ID 或 Apple Watch 解锁。此时需要安装额外的 PAM 插件 <a href="https://github.com/fabianishere/pam_reattach">pam_reattach</a>。使用 Homebrew 可快速安装：</p><figure class="highlight shell"><table><tr><td class="gutter hljs hljs hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">brew install fabianishere/personal/pam_reattach<br></code></pre></div></td></tr></table></figure><p>然后在 <code>/etc/pam.d/sudo</code> 文件的开头加入以下内容即可：</p><figure class="highlight fortran"><table><tr><td class="gutter hljs hljs hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs fortran">auth     <span class="hljs-keyword">optional</span>     pam_reattach.so<br></code></pre></div></td></tr></table></figure><p>注意如果是 M1 Mac 用户，因为 Homebrew 在 M1 上的安装路径为 <code>/opt/homebrew</code>，因此需要指定共享库的绝对路径：</p><figure class="highlight awk"><table><tr><td class="gutter hljs hljs hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">auth     optional     <span class="hljs-regexp">/opt/</span>homebrew<span class="hljs-regexp">/lib/</span>pam/pam_reattach.so<br></code></pre></div></td></tr></table></figure><h2 id="更新系统后"><a href="#更新系统后" class="headerlink" title="更新系统后"></a>更新系统后</h2><p>macOS 在每次更新系统时都会重置系统文件，因此会丢失 <code>/etc/pam.d/sudo</code> 文件的修改。故每次更新系统后都需要重复上述步骤。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>工具配置</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>macOS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
