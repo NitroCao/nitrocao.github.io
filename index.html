@@ -193,18 +193,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/10/05/analyze-docker-cves/" target="_self">
-          analyze-docker-cves
+        <a href="/2021/12/07/problems-when-using-sync-Pool-for-bytes-Buffer/" target="_self">
+          当为 bytes.Buffer 实例使用对象池时应该注意的问题
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/10/05/analyze-docker-cves/" target="_self">
+        <a href="/2021/12/07/problems-when-using-sync-Pool-for-bytes-Buffer/" target="_self">
           
           
             
           
-          
+          背景最近开发的一个项目，后端接收 agent 发送的 BSON 对象反序列化后的字节流，然后将每个对象的字节流写入到 Kafka 中。Kafka SDK 使用的是 sarama。此处使用的是异步生产者，此处将消息实例发送给 kafkaWriter 后，由 SDK 在后台定期发送到 Kafka 中。dataChan channel 中的元素是由 sync.Pool 对象池分配的 bytes.Buff
         </a>
       </p>
 
@@ -212,12 +212,19 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-05 17:13" pubdate>
-              2021-10-05
+            <time datetime="2021-12-07 20:54" pubdate>
+              2021-12-07
             </time>
           </div>
         
         
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Golang/">Golang</a>
+            
+          </div>
         
       </div>
     </article>
